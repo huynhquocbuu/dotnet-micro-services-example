@@ -1,0 +1,63 @@
+version: '3.9'
+services:
+  ##---
+  product-api:
+    image: ${DOCKER_REGISTRY-}product-api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: dockers/product-api/Dockerfile
+  ##---
+  customer-api:
+    image: ${DOCKER_REGISTRY-}customer-api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: dockers/customer-api/Dockerfile 
+  ##---
+  basket-api:
+    image: ${DOCKER_REGISTRY-}basket-api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: dockers/basket-api/Dockerfile
+  ##---
+  ordering-api:
+    image: ${DOCKER_REGISTRY-}ordering-api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: dockers/ordering/Dockerfile
+
+
+#infra section
+  product-db-mysql:
+    image: mysql:8.0.30
+  ##---
+  customer-db-postgres:
+    image: postgres:14.9-alpine
+  ##---
+  basket-db-redis:
+    image: redis:alpine
+  ##---
+  ordering-db-azure-edge:
+    image: mcr.microsoft.com/azure-sql-edge
+  ##---
+  queue-message-rabbitmq:
+    image: rabbitmq:3-management-alpine
+
+#network section
+networks:
+  #---
+  mcr-srv-practice.service.net:
+    name: mcr-srv-practice.service.net
+    driver: bridge
+  #---
+  mcr-srv-practice.infra.net:
+    name: mcr-srv-practice.infra.net
+    driver: bridge
+
+#volumes section
+volumes:
+  product-db-data:
+    name: product-db-data
+  customer-db-data:
+    name: customer-db-data
+  ordering-db-data:
+    name: ordering-db-data

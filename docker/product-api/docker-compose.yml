@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  #---
+  product-db-mysql:
+    image: mysql:8.0.30
+  #---
+  product-api:
+    image: ${DOCKER_REGISTRY-}product-api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: ../../
+      dockerfile: docker/product-api/Dockerfile
+
+#network section
+networks:
+  #---
+  mcr-srv-practice.service.net:
+    name: mcr-srv-practice.service.net
+    driver: bridge
+  #---
+  mcr-srv-practice.infra.net:
+    name: mcr-srv-practice.infra.net
+    driver: bridge
+
+#volumes section
+volumes:
+  product-db-data:
+    name: product-db-data

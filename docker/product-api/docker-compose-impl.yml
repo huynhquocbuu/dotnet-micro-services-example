@@ -1,0 +1,28 @@
+version: '3.9'
+services:
+  #---
+  product-db-mysql:
+    container_name: product-db-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Password123
+      MYSQL_TCP_PORT: 3306
+      MYSQL_DATABASE: ProductDB
+    restart: always
+    volumes:
+      - product-db-data:/var/lib/mysql
+    networks:
+      - mcr-srv-practice.infra.net
+  #---
+  product-api:
+    container_name: product-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:80
+    depends_on:
+      - product-db-mysql
+    networks:
+      - mcr-srv-practice.service.net
+      - mcr-srv-practice.infra.net
+    ports:
+      - "5001:80"
+    restart: always
