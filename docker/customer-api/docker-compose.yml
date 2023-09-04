@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  #---
+  customer-db-postgres:
+    image: postgres:14.9-alpine
+  #---
+  customer-api:
+    image: ${DOCKER_REGISTRY-}customer-api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: ../../
+      dockerfile: docker/customer-api/Dockerfile
+
+#network section
+networks:
+  #---
+  mcr-srv-practice.service.net:
+    name: mcr-srv-practice.service.net
+    driver: bridge
+  #---
+  mcr-srv-practice.infra.net:
+    name: mcr-srv-practice.infra.net
+    driver: bridge
+
+#volumes section
+volumes:
+  customer-db-data:
+    name: customer-db-data

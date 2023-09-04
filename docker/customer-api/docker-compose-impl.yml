@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  #---
+  customer-db-postgres:
+    container_name: customer-db-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Password123
+    restart: always
+    volumes:
+      - customer-db-data:/var/lib/postgresql/data
+    networks:
+      - mcr-srv-practice.infra.net
+  #---
+  customer-api:
+    container_name: customer-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:80
+    depends_on:
+      - customer-db-postgres
+    networks:
+      - mcr-srv-practice.service.net
+      - mcr-srv-practice.infra.net
+    ports:
+      - "5002:80"
+    restart: always
