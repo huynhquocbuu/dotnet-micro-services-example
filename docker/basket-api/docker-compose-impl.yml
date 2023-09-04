@@ -1,0 +1,29 @@
+version: '3.9'
+services:
+  #---
+  basket-db-redis:
+    container_name: basket-db-redis
+    restart: always
+    networks:
+      - mcr-srv-practice.infra.net
+  #---
+  queue-message-rabbitmq:
+    container_name: queue-message-rabbitmq
+    restart: always
+    networks:
+      - mcr-srv-practice.infra.net
+  #---
+  basket-api:
+    container_name: basket-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:80
+    depends_on:
+      - basket-db-redis
+      - queue-message-rabbitmq
+    networks:
+      - mcr-srv-practice.service.net
+      - mcr-srv-practice.infra.net
+    ports:
+      - "5003:80"
+    restart: always
