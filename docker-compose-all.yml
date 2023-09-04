@@ -1,44 +1,44 @@
 version: '3.9'
 services:
-  ##---
+  #---
   product-api:
     image: ${DOCKER_REGISTRY-}product-api:${PLATFORM:-linux}-${TAG:-latest}
     build:
       context: .
-      dockerfile: dockers/product-api/Dockerfile
-  ##---
+      dockerfile: docker/product-api/Dockerfile
+  #---
   customer-api:
     image: ${DOCKER_REGISTRY-}customer-api:${PLATFORM:-linux}-${TAG:-latest}
     build:
       context: .
-      dockerfile: dockers/customer-api/Dockerfile 
-  ##---
+      dockerfile: docker/customer-api/Dockerfile 
+  #---
   basket-api:
     image: ${DOCKER_REGISTRY-}basket-api:${PLATFORM:-linux}-${TAG:-latest}
     build:
       context: .
-      dockerfile: dockers/basket-api/Dockerfile
-  ##---
+      dockerfile: docker/basket-api/Dockerfile
+  #---
   ordering-api:
     image: ${DOCKER_REGISTRY-}ordering-api:${PLATFORM:-linux}-${TAG:-latest}
     build:
       context: .
-      dockerfile: dockers/ordering/Dockerfile
+      dockerfile: docker/ordering-api/Dockerfile
 
 
 #infra section
   product-db-mysql:
     image: mysql:8.0.30
-  ##---
+  #---
   customer-db-postgres:
     image: postgres:14.9-alpine
-  ##---
+  #---
   basket-db-redis:
     image: redis:alpine
-  ##---
+  #---
   ordering-db-azure-edge:
     image: mcr.microsoft.com/azure-sql-edge
-  ##---
+  #---
   queue-message-rabbitmq:
     image: rabbitmq:3-management-alpine
 

@@ -6,4 +6,28 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\building-blocks\Common.Logging\Common.Logging.csproj" />
+      <ProjectReference Include="..\..\..\building-blocks\event-bus\EventBus.Messages\EventBus.Messages.csproj" />
+      <ProjectReference Include="..\..\..\building-blocks\Infrastructure\Infrastructure.csproj" />
+      <ProjectReference Include="..\..\..\building-blocks\Shared\Shared.csproj" />
+      <ProjectReference Include="..\Ordering.Domain\Ordering.Domain.csproj" />
+    </ItemGroup>
+
+
+
+    <ItemGroup>
+      <Folder Include="Features\V2\" />
+    </ItemGroup>
+
+
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    </ItemGroup>
+
+    
+
 </Project>

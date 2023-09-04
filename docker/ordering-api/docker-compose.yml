@@ -1,0 +1,30 @@
+version: '3.9'
+services:
+  #---
+  queue-message-rabbitmq:
+    image: rabbitmq:3-management-alpine
+  #---
+  ordering-db-azure-edge:
+    image: mcr.microsoft.com/azure-sql-edge
+  #---
+  ordering-api:
+    image: ${DOCKER_REGISTRY-}ordering-api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: ../../
+      dockerfile: docker/ordering-api/Dockerfile
+  
+#network section
+networks:
+  #---
+  mcr-srv-practice.service.net:
+    name: mcr-srv-practice.service.net
+    driver: bridge
+  #---
+  mcr-srv-practice.infra.net:
+    name: mcr-srv-practice.infra.net
+    driver: bridge
+
+#volumes section
+volumes:
+  ordering-db-data:
+    name: ordering-db-data
